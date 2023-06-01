@@ -12,16 +12,11 @@ auth.set_access_token(key, secret)
 
 api = tweepy.API(auth)
 woeid = input("Enter woeid: ")
-# WOEID of Nairobi  1528488, NY = 2459115, Doha =1940517, UK - 12903, LA = 2442047
 
-# woeid = 12903
+trends = api.get_place_trends(id=woeid, exclude="hashtags")
  
-# fetching the trends
-trends = api.get_place_trends(id = woeid, exclude = "hashtags")
- 
-# printing the information
-print("The top trends for the location are :")
- 
-for value in trends:
-    for trend in value['trends']:
-        print(trend['name'])
+trends_list = [trend['name'] for value in trends for trend in value['trends']]
+
+# Print the top trends in a single line
+trends_str = " ".join(trends_list)
+print("The top trends for the location are:", trends_str)
